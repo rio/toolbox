@@ -12,7 +12,9 @@ RUN apt update && \
       git \
       openssh-client \
       zsh \
-      sudo
+      sudo && \
+    apt clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN echo '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/toolbox && chmod 440 /etc/sudoers.d/toolbox
 

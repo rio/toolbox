@@ -1,0 +1,13 @@
+{
+	"name": "toolbox",
+	"context": "..",
+	"dockerFile": "../Dockerfile",
+
+	// "runArgs": [
+	// 	"--privileged",
+	// ],
+
+	// "mounts": [
+	// 	"type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
+	// ]
+}

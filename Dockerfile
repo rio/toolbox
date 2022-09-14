@@ -10,6 +10,7 @@ RUN apt update && \
       curl \
       ca-certificates \
       git \
+      openssh-client \
       sudo
 
 RUN echo '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/toolbox && chmod 440 /etc/sudoers.d/toolbox
@@ -26,6 +27,11 @@ RUN curl -sSfLo /tmp/helm.tar.gz  https://get.helm.sh/helm-v3.9.4-linux-amd64.ta
 RUN curl -sSfLo /usr/local/bin/skaffold https://storage.googleapis.com/skaffold/releases/v1.39.2/skaffold-linux-amd64 && \
     echo '6ecdda952ce8e917dde9a362859952dd1d3ad8ae44b2c56696ec6a89c5d8ce4d  /usr/local/bin/skaffold' | sha256sum -c - && \
     chmod +x /usr/local/bin/skaffold
+
+RUN curl -sSfLo /tmp/chezmoi.tar.gz https://github.com/twpayne/chezmoi/releases/download/v2.22.1/chezmoi_2.22.1_linux_amd64.tar.gz && \
+    echo '6ab4593b807e9c2db7536540b00537d61aff00726ff7a6a79e449285f3480b52  /tmp/chezmoi.tar.gz' | sha256sum -c - && \
+    tar xf /tmp/chezmoi.tar.gz --directory=/usr/local/bin chezmoi && \
+    rm /tmp/chezmoi.tar.gz
 
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN useradd \

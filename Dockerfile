@@ -9,6 +9,7 @@ RUN apt update && \
       vim \
       curl \
       ca-certificates \
+      git \
       sudo
 
 RUN echo '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/toolbox && chmod 440 /etc/sudoers.d/toolbox

@@ -36,3 +36,6 @@ RUN useradd \
 	toolbox
 
 USER toolbox
+WORKDIR /home/toolbox
+
+COPY ./scripts ./scripts

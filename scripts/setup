@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -eo pipefail
+
+# move into the repo root
+cd "$(dirname "$0")/.."
+
+DESTROY_CLUSTER='false'
+SKIP_DEPLOY='true'
+
+function main() {
+    while getopts "hds" option; do
+        case "${option}" in
+            d) DESTROY_CLUSTER='true' ;;
+            s) SKIP_DEPLOY='true' ;;
+            *) usage && exit 1 ;;
+        esac
+    done
+
+    if [[ "${DESTROY_CLUSTER}" == 'true' ]]; then
+        # kind delete cluster
+        k3d cluster delete
+        exit 
+    fi
+
+    # if [[ "$(kind get clusters -q)" != "kind" ]]; then
+    #     kind create cluster --config=scripts/kind-config.yaml --kubeconfig=kubeconfig.yaml
+    # fi
+
+    if ! $(k3d cluster get k3s-default > /dev/null); then
+        k3d cluster create --config=scripts/k3d-config.yaml
+        k3d kubeconfig get k3s-default > kubeconfig.yaml
+    fi
+
+    if [[ "${SKIP_DEPLOY}" == 'false' ]]; then
+        local delay=2
+
+        while ! kubectl apply -k manifests ; do
+            echo "Deploy failed, retrying in ${delay} seconds."
+            sleep ${delay}
+
+            if ! ((delay >= 30)); then
+                delay=$((delay*2))
+            fi 
+        done
+
+        kubectl wait --for=condition=Available --all deployments --all-namespaces --timeout 600s
+    fi
+}
+
+function usage() {
+    printf '
+setup
+
+Usage:
+    setup [-hds]
+
+Options:
+    -h Print this screen.
+    -d Destroy cluster.
+    -s Skip deploying kubeflow.
+'
+}
+
+main "$@"

@@ -11,6 +11,7 @@ RUN apt update && \
       ca-certificates \
       git \
       openssh-client \
+      zsh \
       sudo
 
 RUN echo '%sudo   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/toolbox && chmod 440 /etc/sudoers.d/toolbox
@@ -39,8 +40,10 @@ RUN useradd \
 	--create-home \
 	--user-group \
 	--groups sudo,docker \
-	--shell /bin/bash \
+	--shell /bin/zsh \
 	toolbox
+
+RUN cp -v /etc/zsh/newuser.zshrc.recommended /home/toolbox/.zshrc
 
 USER toolbox
 WORKDIR /home/toolbox

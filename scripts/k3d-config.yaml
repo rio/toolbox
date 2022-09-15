@@ -20,10 +20,6 @@ ports:
     nodeFilters:
       - loadbalancer
 
-registries:
-  create: 
-    name: k3d-internal
-
 options:
   kubeconfig:
     updateDefaultKubeconfig: true

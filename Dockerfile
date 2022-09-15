@@ -36,6 +36,11 @@ RUN curl -sSfLo /tmp/chezmoi.tar.gz https://github.com/twpayne/chezmoi/releases/
     tar xf /tmp/chezmoi.tar.gz --directory=/usr/local/bin chezmoi && \
     rm /tmp/chezmoi.tar.gz
 
+RUN curl -sSfLo /tmp/k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.26.3/k9s_Linux_x86_64.tar.gz && \
+    echo '3447ac17cfa46fe91ab2bfcb021d43f7f2d40ac37c7b573241a511b85fc162cf  /tmp/k9s.tar.gz' | sha256sum -c - && \
+    tar xf /tmp/k9s.tar.gz --directory=/usr/local/bin k9s && \
+    rm /tmp/k9s.tar.gz
+
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN useradd \
 	--uid ${UID} \

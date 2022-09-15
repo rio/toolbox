@@ -8,6 +8,7 @@ RUN apt update && \
     apt install -y --no-install-recommends \
       vim \
       curl \
+      unzip \
       ca-certificates \
       git \
       openssh-client \
@@ -40,6 +41,11 @@ RUN curl -sSfLo /tmp/k9s.tar.gz https://github.com/derailed/k9s/releases/downloa
     echo '3447ac17cfa46fe91ab2bfcb021d43f7f2d40ac37c7b573241a511b85fc162cf  /tmp/k9s.tar.gz' | sha256sum -c - && \
     tar xf /tmp/k9s.tar.gz --directory=/usr/local/bin k9s && \
     rm /tmp/k9s.tar.gz
+
+RUN curl -sSfLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.2.9/terraform_1.2.9_linux_amd64.zip && \
+    echo '0e0fc38641addac17103122e1953a9afad764a90e74daf4ff8ceeba4e362f2fb  /tmp/terraform.zip' | sha256sum -c - && \
+    unzip -d /usr/local/bin /tmp/terraform.zip terraform && \
+    rm /tmp/terraform.zip
 
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN useradd \

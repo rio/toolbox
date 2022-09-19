@@ -47,6 +47,11 @@ RUN curl -sSfLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.2.
     unzip -d /usr/local/bin /tmp/terraform.zip terraform && \
     rm /tmp/terraform.zip
 
+RUN curl -sSfLo /tmp/flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v0.34.0/flux_0.34.0_linux_amd64.tar.gz && \
+    echo '9f72f4b821d534f4298fa33c93e28bc0ef13f851f634e4249a63f3c797f94412  /tmp/flux.tar.gz' | sha256sum -c - && \
+    tar xf /tmp/flux.tar.gz --directory=/usr/local/bin flux && \
+    rm /tmp/flux.tar.gz
+
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN useradd \
 	--uid ${UID} \

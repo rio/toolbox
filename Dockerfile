@@ -23,6 +23,8 @@ COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /bin/k3d /usr/local/bin/k3d
 COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /usr/local/bin/kubectl /usr/local/bin/kubectl
 
+COPY --from=k8s.gcr.io/kustomize/kustomize:v3.8.7 /app/kustomize /usr/local/bin/kustomize
+
 RUN curl -sSfLo /tmp/helm.tar.gz  https://get.helm.sh/helm-v3.9.4-linux-amd64.tar.gz && \
     echo '31960ff2f76a7379d9bac526ddf889fb79241191f1dbe2a24f7864ddcb3f6560  /tmp/helm.tar.gz' | sha256sum -c - && \
     tar xf /tmp/helm.tar.gz --strip-components=1 --directory=/usr/local/bin linux-amd64/helm && \

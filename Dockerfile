@@ -23,7 +23,7 @@ COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /bin/k3d /usr/local/bin/k3d
 COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /usr/local/bin/kubectl /usr/local/bin/kubectl
 
-COPY --from=k8s.gcr.io/kustomize/kustomize:v3.8.7 /app/kustomize /usr/local/bin/kustomize
+COPY --from=k8s.gcr.io/kustomize/kustomize:v4.5.5 /app/kustomize /usr/local/bin/kustomize
 
 COPY --from=gcr.io/kpt-dev/kpt:v1.0.0-beta.20 /usr/local/bin/kpt /usr/local/bin/kpt
 

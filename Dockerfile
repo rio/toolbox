@@ -25,6 +25,8 @@ COPY --from=ghcr.io/k3d-io/k3d:5.4-dind /usr/local/bin/kubectl /usr/local/bin/ku
 
 COPY --from=k8s.gcr.io/kustomize/kustomize:v3.8.7 /app/kustomize /usr/local/bin/kustomize
 
+COPY --from=gcr.io/kpt-dev/kpt:v1.0.0-beta.20 /usr/local/bin/kpt /usr/local/bin/kpt
+
 RUN curl -sSfLo /tmp/helm.tar.gz  https://get.helm.sh/helm-v3.9.4-linux-amd64.tar.gz && \
     echo '31960ff2f76a7379d9bac526ddf889fb79241191f1dbe2a24f7864ddcb3f6560  /tmp/helm.tar.gz' | sha256sum -c - && \
     tar xf /tmp/helm.tar.gz --strip-components=1 --directory=/usr/local/bin linux-amd64/helm && \

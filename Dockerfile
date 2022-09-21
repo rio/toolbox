@@ -56,6 +56,11 @@ RUN curl -sSfLo /tmp/flux.tar.gz https://github.com/fluxcd/flux2/releases/downlo
     tar xf /tmp/flux.tar.gz --directory=/usr/local/bin flux && \
     rm /tmp/flux.tar.gz
 
+RUN curl -sSfLo /tmp/istio.tar.gz https://github.com/istio/istio/releases/download/1.15.0/istio-1.15.0-linux-amd64.tar.gz && \
+    echo '5d84897dc25be6757568ef50bb3ddf86388456768cd658ed2670a4f12803c3f8 /tmp/istio.tar.gz' | sha256sum -c - && \
+    tar xf /tmp/istio.tar.gz --strip-components=2 --directory=/usr/local/bin istio-1.15.0/bin/istioctl && \
+    rm /tmp/istio.tar.gz
+
 RUN groupadd --gid ${DOCKER_GID} docker
 RUN useradd \
 	--uid ${UID} \

@@ -13,6 +13,7 @@ RUN apt update && \
       git \
       openssh-client \
       zsh \
+      bind9-dnsutils \
       sudo && \
     apt clean -y && \
     rm -rf /var/lib/apt/lists/*
